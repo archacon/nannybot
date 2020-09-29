@@ -24,27 +24,27 @@ func init() {
 func main() {
 
 	// Create a new Discord session using the provided bot token.
-	// dg, err := discordgo.New("Bot " + Token)
-	// if err != nil {
-	// 	fmt.Println("error creating Discord session,", err)
-	// 	return
-	// }
+	dg, err := discordgo.New("Bot " + Token)
+	if err != nil {
+		fmt.Println("error creating Discord session,", err)
+		return
+	}
 
 	// Register the messageCreate func as a callback for MessageCreate events.
-	// dg.AddHandler(messageCreate)
+	dg.AddHandler(messageCreate)
 
 	// In this example, we only care about receiving message events.
-	// dg.Identify.Intents = discordgo.MakeIntent(discordgo.IntentsGuildMessages)
+	dg.Identify.Intents = discordgo.MakeIntent(discordgo.IntentsGuildMessages)
 
 	// Open a websocket connection to Discord and begin listening.
-	// err = dg.Open()
-	// if err != nil {
-	// 	fmt.Println("error opening connection,", err)
-	// 	return
-	// }
-	
+	err = dg.Open()
+	if err != nil {
+		fmt.Println("error opening connection,", err)
+		return
+	}
+
 	// Initiate Bot
-	initBot()
+	RefreshMemeList()
 
 	// Wait here until CTRL-C or other term signal is received.
 	fmt.Println("Bot is now running.  Press CTRL-C to exit.")
@@ -53,7 +53,7 @@ func main() {
 	<-sc
 
 	// Cleanly close down the Discord session.
-	// dg.Close()
+	dg.Close()
 }
 
 // This function will be called (due to AddHandler above) every time a new
@@ -66,7 +66,7 @@ func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 		return
 	}
 	// If the message is "ping" reply with "Pong!"
-	if m.Content == "what is your order?"|| m.Content == "What is your order?" {
+	if m.Content == "what is your order?" || m.Content == "What is your order?" {
 		s.ChannelMessageSend(m.ChannelID, "I'll have Two number 9s, a number 9 large, a number 6 with extra dip, a number 7, two number 45s, one with cheese, and a large soda. ")
 	}
 
@@ -75,7 +75,19 @@ func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 	}
 
 	// If the message is "pong" reply with "Ping!"
-	if m.Content == "Who is the smolest?" ||m.Content == "who is the smolest?"{
+	if m.Content == "Who is the smolest?" || m.Content == "who is the smolest?" {
 		s.ChannelMessageSend(m.ChannelID, "Kim is STILL the smolest")
+	}
+
+	if m.Content == "Get meme" {
+		fmt.Println(m.Author.ID)
+		var p = getRandomMeme()
+		s.ChannelMessageSend(m.ChannelID, p.URL)
+		s.ChannelMessageSend(m.ChannelID, p.Title)
+	}
+
+	if m.Author.ID == "527160074502799370" && m.Content == "Get fresh memes"{
+		s.ChannelMessageSend(m.ChannelID, "Getting fresh memes just for you, daddy")
+		RefreshMemeList()
 	}
 }
