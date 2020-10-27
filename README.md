@@ -1,10 +1,14 @@
 <img align="right" src="http://bwmarrin.github.io/discordgo/img/discordgo.png">
 
-## DiscordGo Ping Pong Example
+## NannyBot
 
-This example demonstrates how to utilize DiscordGo to create a Ping Pong Bot.
+Nannybot uses Reddit's API to pull reddit posts in predetermined lists of
 
-This Bot will respond to "ping" with "Pong!" and "pong" with "Ping!".
+threads and refines the list to meet a "like" threshold. Nanny bot will post a
+
+random image from the lists when "Get meme" is typed in the discord channel it
+
+has joined
 
 **Join [Discord Gophers](https://discord.gg/0f1SbxBZjYoCtNPP)
 Discord chat channel for support.**
@@ -13,7 +17,6 @@ Discord chat channel for support.**
 
 This assumes you already have a working Go environment setup and that
 DiscordGo is correctly installed on your system.
-
 
 From within the pingpong example folder, run the below command to compile the
 example.
@@ -24,12 +27,12 @@ go build
 
 ### Usage
 
-This example uses bot tokens for authentication only. While user/password is 
+This example uses bot tokens for authentication only. While user/password is
 supported by DiscordGo, it is not recommended for bots.
 
 ```
-./pingpong --help
-Usage of ./pingpong:
+./nannybot --help
+Usage of ./nannybot:
   -t string
         Bot Token
 ```
@@ -37,6 +40,7 @@ Usage of ./pingpong:
 The below example shows how to start the bot
 
 ```sh
-./pingpong -t YOUR_BOT_TOKEN
+./nannybot -t YOUR_BOT_TOKEN
 Bot is now running.  Press CTRL-C to exit.
 ```
+git
